@@ -3,9 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveVolar", "ViveVolar\ViveVolar.csproj", "{A78AAD94-0246-4FC9-BBE6-30DC8B9E2732}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveVolarApi", "ViveVolar\ViveVolarApi.csproj", "{A78AAD94-0246-4FC9-BBE6-30DC8B9E2732}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveVolar.Tests", "ViveVolar.Tests\ViveVolar.Tests.csproj", "{530CD058-B74E-4CCB-8151-B57564A444B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveVolarApi.Tests", "ViveVolar.Tests\ViveVolarApi.Tests.csproj", "{530CD058-B74E-4CCB-8151-B57564A444B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A2BCB199-B0E3-4D5F-93DC-CBE33E3C52BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F90EC0A4-1FED-4363-BBEF-4CC8D15F6B2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{0E0EDA36-4801-4802-AD8E-950B5900F47F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{9F068CB2-C63F-4D33-9A4B-5A9BD49B03D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{C462591E-B2DD-498C-ACE0-D3A14E591253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +33,23 @@ Global
 		{530CD058-B74E-4CCB-8151-B57564A444B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{530CD058-B74E-4CCB-8151-B57564A444B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{530CD058-B74E-4CCB-8151-B57564A444B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C462591E-B2DD-498C-ACE0-D3A14E591253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C462591E-B2DD-498C-ACE0-D3A14E591253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C462591E-B2DD-498C-ACE0-D3A14E591253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C462591E-B2DD-498C-ACE0-D3A14E591253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A78AAD94-0246-4FC9-BBE6-30DC8B9E2732} = {A2BCB199-B0E3-4D5F-93DC-CBE33E3C52BE}
+		{530CD058-B74E-4CCB-8151-B57564A444B1} = {F90EC0A4-1FED-4363-BBEF-4CC8D15F6B2E}
+		{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21} = {9F068CB2-C63F-4D33-9A4B-5A9BD49B03D8}
+		{C462591E-B2DD-498C-ACE0-D3A14E591253} = {9F068CB2-C63F-4D33-9A4B-5A9BD49B03D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {355A7502-08DA-4595-8735-40C4A1D8D739}

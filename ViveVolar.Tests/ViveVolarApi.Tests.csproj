@@ -109,9 +109,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ViveVolar\ViveVolar.csproj">
+    <ProjectReference Include="..\ViveVolar\ViveVolarApi.csproj">
       <Project>{A78AAD94-0246-4FC9-BBE6-30DC8B9E2732}</Project>
-      <Name>ViveVolar</Name>
+      <Name>ViveVolarApi</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
