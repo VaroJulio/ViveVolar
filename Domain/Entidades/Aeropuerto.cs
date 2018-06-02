@@ -1,16 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
 {
+    [Table("AEROPUESTOS")]
     public class Aeropuerto
     {
-        int Id { get; set;}
-        string CodigoMundial { get; set; }
-        string Nombre { get; set; }
-        string IdCiudad { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set;}
+
+        public string CodigoMundial { get; set; }
+
+        [Required]
+        public string Nombre { get; set; }
+
+        [ForeignKey("Ciudad")]
+        public string IdCiudad { get; set; }
+
+        public virtual Ciudad Ciudad { get; set; }
+
+        public virtual OrigenDestino OrigenDestino { get; set; }
     }
 }

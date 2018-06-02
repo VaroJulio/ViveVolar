@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
 {
+    [Table("ORIGENESDESTINOS")]
     public class OrigenDestino
     {
-        int Id { get; set; }
-        int IdAeropuerto { get; set; }
-        string Nombre { get; set; }
-        bool EsOrigen { get; set; }
-        bool EsDestino { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [ForeignKey("Aeropuerto")]
+        public int IdAeropuerto { get; set; }
+
+        [Required]
+        public string Nombre { get; set; }
+
+        [Required]
+        public bool EsOrigen { get; set; }
+
+        [Required]
+        public bool EsDestino { get; set; }
+
+        public virtual Aeropuerto Aeropuerto { get; set; }
     }
 }

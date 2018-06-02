@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Entidades
 {
+    [Table("CIUDADES")]
     public class Ciudad
     {
-        int Id { get; set; }
-        int Nombre { get; set; }
-        int IdEstado { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+         public int Id { get; set; }
+
+        [Required]
+        public int Nombre { get; set; }
+
+        [ForeignKey("Estado")]
+        public int IdEstado { get; set; }
+
+        public virtual Estado Estado { get; set; }
+
+        public virtual ICollection<Aeropuerto> Aeropuertos { get; set; }
     }
 }

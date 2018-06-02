@@ -1,18 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
 {
-    class Vuelo
+    [Table("VUELOS")]
+    public class Vuelo
     {
-        int Id { get; set; }
-        int IdOrigen { get; set; }
-        DateTime HoraSalida { get; set; }
-        int IdDestino { get; set; }
-        DateTime HoraLlegada { get; set; }
-        int NumPasajeros { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [ForeignKey("Origen")]
+        public int IdOrigen { get; set; }
+
+        [Required]
+        public DateTime HoraSalida { get; set; }
+
+        [ForeignKey("Destino")]
+        public int IdDestino { get; set; }
+
+        [Required]
+        public DateTime HoraLlegada { get; set; }
+
+        [Required]
+        public int NumPasajeros { get; set; }
+
+        [Required]
+        public decimal ValorInicialTicket { get; set; }
+
+        public virtual OrigenDestino Origen { get; set; }
+
+        public virtual OrigenDestino Destino { get; set; }
+
+        public virtual ICollection<Itinerario> Itinerarios { get; set; }
     }
 }
