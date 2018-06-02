@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.Entidades
 {
-    public class Class1
+    class Pais
     {
+        int Id { get; set; }
+        int Nombre { get; set; }
     }
 }
