@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Auxiliares\AuxiliarViveVolar.cs" />
     <Compile Include="Auxiliares\ViveVolarException.cs" />
+    <Compile Include="Constantes\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -16,7 +16,8 @@ namespace Domain.Entidades
          public int Id { get; set; }
 
         [Required]
-        public int Nombre { get; set; }
+        [StringLength(50)]
+        public string Nombre { get; set; }
 
         [ForeignKey("Estado")]
         public int IdEstado { get; set; }

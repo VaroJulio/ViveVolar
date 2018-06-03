@@ -10,13 +10,15 @@ namespace Domain.Entidades
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set;}
 
+        [StringLength(6)]
         public string CodigoMundial { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string Nombre { get; set; }
 
         [ForeignKey("Ciudad")]
-        public string IdCiudad { get; set; }
+        public int IdCiudad { get; set; }
 
         public virtual Ciudad Ciudad { get; set; }
 

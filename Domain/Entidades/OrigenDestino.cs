@@ -14,6 +14,7 @@ namespace Domain.Entidades
         public int IdAeropuerto { get; set; }
 
         [Required]
+        [StringLength(200)]
         public string Nombre { get; set; }
 
         [Required]

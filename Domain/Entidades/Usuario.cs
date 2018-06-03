@@ -8,13 +8,16 @@ namespace Domain.Entidades
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [StringLength(100)]
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Campo Clave requerido.")]
         [Index("ClaveIndex", IsUnique = true)]
+        [StringLength(12)]
         public string Clave { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string NombreCompleto { get; set; }
 
         [ForeignKey("Rol")]

@@ -1,4 +1,6 @@
 ﻿using Common.Auxiliares;
+using Common.Constantes;
+using Domain.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,18 +13,87 @@ namespace Domain
 {
     public class ViveVolarDbContext : DbContext
     {
+        #region Constructores
         public string ConnectionString { get; set; }
         public ViveVolarDbContext(string connectionStringName) : base("name=" + connectionStringName)
         {
             // Permite desactivar las migraciones a la base de datos
-            Database.SetInitializer<ViveVolarDbContext>(null);
+            ejecutarInicializador(TipoInicializador.NoExiste);
+        }
+        #endregion
+
+        #region Propiedades
+        public DbSet<Pais> Paises { get; set; }
+        public DbSet<Estado> Estados { get; set; }
+        public DbSet<Ciudad> Ciudades { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Aeropuerto> Aeropuertos { get; set; }
+        public DbSet<OrigenDestino> OrigenesDestinos { get; set; }
+        public DbSet<Vuelo> Vuelos { get; set; }
+        public DbSet<Pasajero> Pasajeros { get; set; }
+        public DbSet<Reserva> Reservas { get; set; }
+        public DbSet<Itinerario> Itinerarios { get; set; }
+        #endregion
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Properties().Configure(cppc => cppc.HasColumnName(cppc.ClrPropertyInfo.Name.ToUpper()));
+            modelBuilder.Entity<Vuelo>().Property(i => i.ValorInicialTicket).HasColumnType("Money");
+            modelBuilder.Entity<Itinerario>().Property(i => i.ValorFinalTicket).HasColumnType("Money");
+            base.OnModelCreating(modelBuilder);
         }
 
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
+        private void ejecutarInicializador(TipoInicializador tipoInicializador)
+        {
+            switch (tipoInicializador)
+            {
+                case TipoInicializador.Ninguno:
+                    Database.SetInitializer<ViveVolarDbContext>(null);
+                    break;
+                case TipoInicializador.NoExiste:
+                    Database.SetInitializer(new ViveVolarNoExisteDBInitializer());
+                    break;
+                case TipoInicializador.ModeloCambio:
+                    Database.SetInitializer(new ViveVolarModeloCambioDBInitializer());
+                    break;
+                case TipoInicializador.Siempre:
+                    Database.SetInitializer(new ViveVolarSiempreDBInitializer());
+                    break;
+                case TipoInicializador.Migracion:
+                    Database.SetInitializer(new ViveVolarMigracionDBInitializer());
+                    break;
+            }
+        }
 
-        //}
+        private class ViveVolarNoExisteDBInitializer : CreateDatabaseIfNotExists<ViveVolarDbContext>
+        {
+            protected override void Seed(ViveVolarDbContext context)
+            {
+                context.Roles.Add(new Rol() {Nombre = "administrador", Descripcion = "Administrador de la plataforma" });
+                context.Usuarios.Add(new Usuario(){ Correo = "aaronsistemas@hotmail.com", Clave = "alvaro2018", IdRol = context.Roles.First().Id } );
+                base.Seed(context);
+            }
+        }
 
+        private class ViveVolarModeloCambioDBInitializer : DropCreateDatabaseIfModelChanges<ViveVolarDbContext>
+        {
+            protected override void Seed(ViveVolarDbContext context)
+            {
+                base.Seed(context);
+            }
+        }
+
+        private class ViveVolarSiempreDBInitializer : DropCreateDatabaseAlways<ViveVolarDbContext>
+        {
+            protected override void Seed(ViveVolarDbContext context)
+            {
+                base.Seed(context);
+            }
+        }
+
+        private class ViveVolarMigracionDBInitializer : MigrateDatabaseToLatestVersion<ViveVolarDbContext, Domain.Migrations.Configuration> { }
+        
         public override int SaveChanges()
         {
             try

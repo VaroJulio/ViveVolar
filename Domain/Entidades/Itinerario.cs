@@ -9,16 +9,20 @@ namespace Domain.Entidades
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        int Id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Reserva")]
-        Guid CodigoConsultaReserva { get; set; }
+        public Guid CodigoConsultaReserva { get; set; }
 
         [ForeignKey("Vuelo")]
-        int IdVuelo { get; set; }
+        public int IdVuelo { get; set; }
 
         [ForeignKey("Pasajero")]
-        string IdentificacionPasajero { get; set; }
+        [StringLength(15)]
+        public string IdentificacionPasajero { get; set; }
+
+        [Required]
+        public decimal ValorFinalTicket { get; set; }
 
         public virtual Reserva Reserva { get; set; }
 

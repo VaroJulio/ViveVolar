@@ -20,6 +20,7 @@ namespace Domain.Entidades
         public DateTime FechaReserva { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string Correo { get; set; }
 
         public virtual ICollection<Itinerario> Itinerarios { get; set; }
