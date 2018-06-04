@@ -12,7 +12,7 @@ namespace Domain.Entidades
         public int Id { get; set; }
 
         [ForeignKey("Reserva")]
-        public Guid CodigoConsultaReserva { get; set; }
+        public int IdReserva { get; set; }
 
         [ForeignKey("Vuelo")]
         public int IdVuelo { get; set; }

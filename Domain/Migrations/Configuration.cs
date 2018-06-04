@@ -32,11 +32,23 @@ namespace Domain.Migrations
         }
     }
 
-    public partial class UpdateFechaTimeStampField : DbMigration
+    public partial class UpdateFechaTimeStampReservaField : DbMigration
     {
         public override void Up()
         {
             AlterColumn("dbo.Reservas", "FechaReserva", c => c.DateTime(nullable: false, defaultValueSql: "GETUTCDATE()"));
+        }
+
+        public override void Down()
+        {
+        }
+    }
+
+    public partial class UpdateEstaHabilitadoOrigenDEstinoField : DbMigration
+    {
+        public override void Up()
+        {
+            AlterColumn("dbo.Origenesdestinos", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
         }
 
         public override void Down()

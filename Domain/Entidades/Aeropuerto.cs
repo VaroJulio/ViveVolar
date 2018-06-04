@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
@@ -22,6 +23,6 @@ namespace Domain.Entidades
 
         public virtual Ciudad Ciudad { get; set; }
 
-        public virtual OrigenDestino OrigenDestino { get; set; }
+        public virtual ICollection<OrigenDestino> OrigenDestinos { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Domain.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Domain
         public ViveVolarDbContext(string connectionStringName) : base("name=" + connectionStringName)
         {
             // Permite desactivar las migraciones a la base de datos
-            ejecutarInicializador(TipoInicializador.NoExiste);
+            ejecutarInicializador(TipoInicializador.Ninguno);
         }
         #endregion
 
@@ -38,6 +39,8 @@ namespace Domain
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties().Configure(cppc => cppc.HasColumnName(cppc.ClrPropertyInfo.Name.ToUpper()));
             modelBuilder.Entity<Vuelo>().Property(i => i.ValorInicialTicket).HasColumnType("Money");
             modelBuilder.Entity<Itinerario>().Property(i => i.ValorFinalTicket).HasColumnType("Money");
@@ -70,8 +73,19 @@ namespace Domain
         {
             protected override void Seed(ViveVolarDbContext context)
             {
-                context.Roles.Add(new Rol() {Nombre = "administrador", Descripcion = "Administrador de la plataforma" });
-                context.Usuarios.Add(new Usuario(){ Correo = "aaronsistemas@hotmail.com", Clave = "alvaro2018", IdRol = context.Roles.First().Id } );
+                //Rol admin = new Rol();
+                //admin.Nombre = "Administrador";
+                //admin.Descripcion = "Administrador de la plataforma";
+
+                //Usuario usuario = new Usuario();
+                //usuario.Correo = "aaronsistemas@hotmail.com";
+                //usuario.Clave = "alvaro2018";
+                //usuario.NombreCompleto = "Alvaro Jose Julio Beltran";
+
+                //admin.Usuarios.Add(usuario);
+                //context.Roles.Add(admin);
+                //context.Roles.Add(new Rol() {Nombre = "administrador", Descripcion = "Administrador de la plataforma" });
+                //context.Usuarios.Add(new Usuario(){ Correo = "aaronsistemas@hotmail.com", Clave = "alvaro2018", IdRol = context.Roles. } );
                 base.Seed(context);
             }
         }
@@ -93,7 +107,7 @@ namespace Domain
         }
 
         private class ViveVolarMigracionDBInitializer : MigrateDatabaseToLatestVersion<ViveVolarDbContext, Domain.Migrations.Configuration> { }
-        
+
         public override int SaveChanges()
         {
             try
@@ -132,9 +146,12 @@ namespace Domain
 
         private static Exception MejorarExcepcion(Exception ex)
         {
-            var mensaje = string.Concat(
-                ex.Message, "---> The inner exception is: ", ex.InnerException.Message
-            );
+            if (ex.InnerException != null)
+            {
+                throw MejorarExcepcion(ex.InnerException);
+            }
+
+            var mensaje = string.Concat("---> The inner exception is: ", ex.Message);
 
             var excepcion = new Exception(mensaje, ex);
 
