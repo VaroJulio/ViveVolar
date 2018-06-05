@@ -30,6 +30,9 @@ namespace Domain.Entidades
         [Required]
         public decimal ValorInicialTicket { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public bool Habilitado { get; set; }
+
         public virtual OrigenDestino Origen { get; set; }
 
         public virtual OrigenDestino Destino { get; set; }

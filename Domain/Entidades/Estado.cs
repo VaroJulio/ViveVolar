@@ -18,6 +18,9 @@ namespace Domain.Entidades
         [ForeignKey("Pais")]
         public int IdPais { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public bool Habilitado { get; set; }
+
         public virtual Pais Pais { get; set; }
 
         public virtual ICollection<Ciudad> Ciudades { get; set; } 

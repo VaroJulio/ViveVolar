@@ -45,6 +45,17 @@
     <Compile Include="Auxiliares\ViveVolarException.cs" />
     <Compile Include="Constantes\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="To\Maestros\AeropuertoTo.cs" />
+    <Compile Include="To\Maestros\CiudadTo.cs" />
+    <Compile Include="To\Maestros\EstadoTo.cs" />
+    <Compile Include="To\Maestros\FiltrosMaestrosTo.cs" />
+    <Compile Include="To\Maestros\OrigenDestinoTo.cs" />
+    <Compile Include="To\Maestros\PaisTo.cs" />
+    <Compile Include="To\Maestros\TodosMaestrosTo.cs" />
+    <Compile Include="To\Reservas\ItinerarioTo.cs" />
+    <Compile Include="To\Reservas\PasajeroTo.cs" />
+    <Compile Include="To\Reservas\ReservaTo.cs" />
+    <Compile Include="To\Vuelos\VuelosTo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

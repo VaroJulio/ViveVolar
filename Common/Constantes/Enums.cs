@@ -14,4 +14,24 @@ namespace Common.Constantes
         Siempre,
         Migracion
     }
+
+    public enum FiltroGeografico
+    {
+        IdPais,
+        IdEstado,
+        IdCiudad,
+    }
+
+    public enum FiltroAeropuerto
+    {
+        IdMundial,
+        IdOrigenDestino
+    }
+
+    public enum EsOrigenODestino
+    {
+        NoAplica,
+        EsOrigen,
+        EsDestino
+    }
 }
