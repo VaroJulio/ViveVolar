@@ -26,11 +26,11 @@ namespace Core.Maestros
         Task<ICollection<AeropuertoTo>> ObtenerAeropuertosPorFiltroAsync(FiltroAeropuertoTo filtro);
 
         //Guardar - Editar
-        Task GuardarPaisAsync(PaisTo pais);
-        Task GuardarEstadoAsync(EstadoTo estado);
-        Task GuardarCiudadAsync(CiudadTo ciudad);
-        Task GuardarOrigenDestinoAsync(OrigenDestinoTo origenDestino);
-        Task GuardarAeropuertoAsync(AeropuertoTo aeropuerto);
+        //Task GuardarPaisAsync(PaisTo pais);
+        //Task GuardarEstadoAsync(EstadoTo estado);
+        //Task GuardarCiudadAsync(CiudadTo ciudad);
+        //Task GuardarOrigenDestinoAsync(OrigenDestinoTo origenDestino);
+        //Task GuardarAeropuertoAsync(AeropuertoTo aeropuerto);
         //Task GuardarPaisesAsync(List<PaisTo> paises);
         //Task GuardarEstadosAsync(List<EstadoTo> estados);
         //Task GuardarCiudadesAsync(List<CiudadTo> ciudades);
@@ -38,11 +38,11 @@ namespace Core.Maestros
         //Task GuardarAeropuertosAsync(List<AeropuertoTo> aeropuertos);
 
         //Remover - Deshabilitar
-        Task RemoverPaisAsync(PaisTo pais);
-        Task RemoverEstadoAsync(EstadoTo estado);
-        Task RemoverCiudadAsync(CiudadTo ciudad);
-        Task RemoverOrigenDestinoAsync(OrigenDestinoTo origenDestino);
-        Task RemovoerAeropuertoAsync(AeropuertoTo aeropuerto);
+        //Task RemoverPaisAsync(PaisTo pais);
+        //Task RemoverEstadoAsync(EstadoTo estado);
+        //Task RemoverCiudadAsync(CiudadTo ciudad);
+        //Task RemoverOrigenDestinoAsync(OrigenDestinoTo origenDestino);
+        //Task RemovoerAeropuertoAsync(AeropuertoTo aeropuerto);
         //Task RemoverPaisesAsync(List<PaisTo> paises);
         //Task RemoverEstadosAsync(List<EstadoTo> estados);
         //Task RemoverCiudadesAsync(List<CiudadTo> ciudades);

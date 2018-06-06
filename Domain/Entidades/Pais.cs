@@ -15,8 +15,9 @@ namespace Domain.Entidades
         [StringLength(50)]
         public string Nombre { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public bool Habilitado { get; set; }
+        [Required]
+        [StringLength(1)]
+        public string Habilitado { get; set; }
 
         public virtual ICollection<Estado> Estados { get; set; }
     }

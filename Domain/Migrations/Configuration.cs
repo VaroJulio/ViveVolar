@@ -9,26 +9,34 @@ namespace Domain.Migrations
 {
     internal sealed class Configuration : DbMigrationsConfiguration<ViveVolarDbContext>
     {
+        private readonly bool _pendingMigrations;
 
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
             ContextKey = "ViveVolarDbContext";
+            //var migrator = new DbMigrator(this);
+            //DbMigration primera = new UpdateFechaTimeStampReservaField();
+            //primera.Up();
+            //_pendingMigrations = migrator.GetPendingMigrations().Any();
+            //if (_pendingMigrations)
+            //{
+            //    migrator.Update();
+            //    Seed(ViveVolarDbContext.GetDbContext());
+            //}
+
+            //DbMigration primera = new UpdateEstaHabilitadoField();
+            //primera.Up();
+            //DbMigration segunda = new UpdateFechaTimeStampReservaField();
+            //segunda.Up();
+            //TargetDatabase = new System.Data.Entity.Infrastructure.DbConnectionInfo("ViveVolarDbConnectionString");
         }
 
         protected override void Seed(ViveVolarDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data. E.g.
-
-            //  context.People.AddOrUpdate(
-            //  p ⇒ p.FullName, 
-            //  new Person { FullName = "Andrew Peters" }, 
-            //  new Person { FullName = "Brice Lambson" }, 
-            //  new Person { FullName = "Rowan Miller" }
-            //  );
+            //context.SaveChanges();
+            base.Seed(context);
         }
     }
 
@@ -44,11 +52,16 @@ namespace Domain.Migrations
         }
     }
 
-    public partial class UpdateEstaHabilitadoOrigenDEstinoField : DbMigration
+    public partial class UpdateEstaHabilitadoField : DbMigration
     {
         public override void Up()
         {
+            AlterColumn("dbo.Paises", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
+            AlterColumn("dbo.Estados", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
+            AlterColumn("dbo.Ciudades", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
             AlterColumn("dbo.Origenesdestinos", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
+            AlterColumn("dbo.Aeropuertos", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
+            AlterColumn("dbo.Vuelos", "Habilitado", c => c.Boolean(nullable: false, defaultValueSql: "true"));
         }
 
         public override void Down()

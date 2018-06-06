@@ -55,7 +55,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccesoDatosTest.cs" />
+    <Compile Include="CoreTest.cs" />
+    <Compile Include="DomainTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{D956F394-7EAE-4866-8F91-70AD1BA3DC4D}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{C462591E-B2DD-498C-ACE0-D3A14E591253}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{A5BE3BD8-B218-4082-80E5-28E1B9EFAA21}</Project>
       <Name>Domain</Name>

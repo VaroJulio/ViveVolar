@@ -22,8 +22,9 @@ namespace Domain.Entidades
         [ForeignKey("Estado")]
         public int IdEstado { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public bool Habilitado { get; set; }
+        [Required]
+        [StringLength(1)]
+        public string Habilitado { get; set; }
 
         public virtual Estado Estado { get; set; }
 

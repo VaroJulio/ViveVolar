@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +14,7 @@ namespace ViveVolar
     {
         protected void Application_Start()
         {
+            AutoMapperConfig.RegistrarMapeosGlobales();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

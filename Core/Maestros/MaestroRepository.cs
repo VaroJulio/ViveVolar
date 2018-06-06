@@ -1,4 +1,7 @@
-﻿using Common.To.Maestros;
+﻿using AutoMapper;
+using Common.To.Maestros;
+using Core.Maestros.BdRepositories;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,36 +10,18 @@ using System.Threading.Tasks;
 
 namespace Core.Maestros
 {
-    class MaestroRepository : IMaestrosRepository
+    public class MaestroRepository : IMaestrosRepository
     {
-        public Task GuardarAeropuertoAsync(AeropuertoTo aeropuerto)
+        public async Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task GuardarCiudadAsync(CiudadTo ciudad)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task GuardarEstadoAsync(EstadoTo estado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task GuardarOrigenDestinoAsync(OrigenDestinoTo origenDestino)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task GuardarPaisAsync(PaisTo pais)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            AeropuertoTo aeropuerto = new AeropuertoTo();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var aeropuertoRepositorio = new AeropuertoRepository(Contexto);
+                var result = await aeropuertoRepositorio.ObtenerPorId(id.ToString());
+                aeropuerto = Mapper.Map<AeropuertoTo>(result);
+            }
+            return aeropuerto;
         }
 
         public Task<ICollection<AeropuertoTo>> ObtenerAeropuertosPorFiltroAsync(FiltroGeograficoTo filtro)
@@ -85,31 +70,6 @@ namespace Core.Maestros
         }
 
         public Task<PaisTo> ObtenerPaisPorIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoverCiudadAsync(CiudadTo ciudad)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoverEstadoAsync(EstadoTo estado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoverOrigenDestinoAsync(OrigenDestinoTo origenDestino)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemoverPaisAsync(PaisTo pais)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task RemovoerAeropuertoAsync(AeropuertoTo aeropuerto)
         {
             throw new NotImplementedException();
         }

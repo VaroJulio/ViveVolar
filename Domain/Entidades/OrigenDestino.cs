@@ -24,8 +24,9 @@ namespace Domain.Entidades
         [Required]
         public bool EsDestino { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public bool Habilitado { get; set; }
+        [Required]
+        [StringLength(1)]
+        public string Habilitado { get; set; }
 
         public virtual Aeropuerto Aeropuerto { get; set; }
 

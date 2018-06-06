@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace ViveVolar.Controllers
 {
+[System.Web.Http.Authorize]
     //[Authorize]
     public class ValuesController : ApiController
     {

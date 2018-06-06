@@ -16,9 +16,11 @@ namespace Domain
     {
         #region Constructores
         public string ConnectionString { get; set; }
+
+        public ViveVolarDbContext() : base("ViveVolarDbConnectionString") { }
+
         public ViveVolarDbContext(string connectionStringName) : base("name=" + connectionStringName)
         {
-            // Permite desactivar las migraciones a la base de datos
             ejecutarInicializador(TipoInicializador.Ninguno);
         }
         #endregion
@@ -73,19 +75,11 @@ namespace Domain
         {
             protected override void Seed(ViveVolarDbContext context)
             {
-                //Rol admin = new Rol();
-                //admin.Nombre = "Administrador";
-                //admin.Descripcion = "Administrador de la plataforma";
-
-                //Usuario usuario = new Usuario();
-                //usuario.Correo = "aaronsistemas@hotmail.com";
-                //usuario.Clave = "alvaro2018";
-                //usuario.NombreCompleto = "Alvaro Jose Julio Beltran";
-
-                //admin.Usuarios.Add(usuario);
-                //context.Roles.Add(admin);
+                Rol admin = new Rol();
+                admin.Nombre = "Administrador";
+                admin.Descripcion = "Administrador de la plataforma";
+                context.Roles.Add(admin);
                 //context.Roles.Add(new Rol() {Nombre = "administrador", Descripcion = "Administrador de la plataforma" });
-                //context.Usuarios.Add(new Usuario(){ Correo = "aaronsistemas@hotmail.com", Clave = "alvaro2018", IdRol = context.Roles. } );
                 base.Seed(context);
             }
         }

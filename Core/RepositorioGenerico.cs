@@ -11,11 +11,18 @@ namespace Core
 {
     public class RepositorioGenerico<T> where T : class
     {
-        protected DbContext Contexto = ViveVolarDbContext.GetDbContext();
+        protected DbContext Contexto;
+        //= ViveVolarDbContext.GetDbContext();
         protected DbSet<T> DbSet;
 
         public RepositorioGenerico()
         {
+            DbSet = Contexto.Set<T>();
+        }
+
+        public RepositorioGenerico(DbContext contexto)
+        {
+            Contexto = contexto;
             DbSet = Contexto.Set<T>();
         }
 
@@ -34,9 +41,18 @@ namespace Core
             return DbSet.Where(expresion);
         }
 
-        public T ObtenerPorId(string id)
+        public async Task<T> ObtenerPorId(string id)
         {
-            return DbSet.Find(id);
+            int parameter;
+            if (int.TryParse(id, out parameter))
+            {
+                return await DbSet.FindAsync(parameter);
+            }
+            else
+            {
+                return await DbSet.FindAsync(id);
+            }
+            
         }
 
         public IQueryable<T> ObtenerTodos()
@@ -49,5 +65,4 @@ namespace Core
             Contexto.SaveChanges();
         }
     }
-}
 }
