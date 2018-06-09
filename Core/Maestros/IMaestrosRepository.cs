@@ -20,10 +20,10 @@ namespace Core.Maestros
         Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id);
         Task<ICollection<PaisTo>> ObtenerPaisesPorFiltroAsync(FiltroGeograficoTo filtro);
         Task<ICollection<EstadoTo>> ObtenerEstadosPorFiltroAsync(FiltroGeograficoTo filtro);
-        Task<ICollection<CiudadTo>> ObtenerCiudadesPorFiltroAsync(FiltroGeograficoTo filtro);
+        ICollection<CiudadTo> ObtenerCiudadesPorFiltro(FiltroGeograficoTo filtro);
         Task<ICollection<OrigenDestinoTo>> ObtenerOrigenesDestinosPorFiltroAsync(FiltroGeograficoTo filtro);
-        Task<ICollection<AeropuertoTo>> ObtenerAeropuertosPorFiltroAsync(FiltroGeograficoTo filtro);
-        Task<ICollection<AeropuertoTo>> ObtenerAeropuertosPorFiltroAsync(FiltroAeropuertoTo filtro);
+        ICollection<AeropuertoTo> ObtenerAeropuertosPorFiltro(FiltroGeograficoTo filtro);
+        ICollection<AeropuertoTo> ObtenerAeropuertosPorFiltro(FiltroAeropuertoTo filtro);
 
         //Guardar - Editar
         //Task GuardarPaisAsync(PaisTo pais);

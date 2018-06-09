@@ -24,6 +24,7 @@ namespace Common.Constantes
 
     public enum FiltroAeropuerto
     {
+        IdAeropuerto,
         IdMundial,
         IdOrigenDestino
     }

@@ -9,14 +9,14 @@ namespace Common.To.Maestros
 {
     public class FiltroGeograficoTo
     {
-        int Id { get; set; }
-        FiltroGeografico JerarquiaGeografica { get; set; }
+        public int Id { get; set; }
+        public FiltroGeografico JerarquiaGeografica { get; set; }
     }
 
     public class FiltroAeropuertoTo
     {
-        string Id { get; set; }
-        FiltroAeropuerto IdFiltroBusqueda { get; set; }
-        EsOrigenODestino CriterioOrigenDestino { get; set; }
+        public string Id { get; set; }
+        public FiltroAeropuerto IdFiltroBusqueda { get; set; }
+        public EsOrigenODestino CriterioOrigenDestino { get; set; }
     } 
 }
