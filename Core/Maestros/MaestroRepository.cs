@@ -52,7 +52,7 @@ namespace Core.Maestros
                     filtroInfo = a => a.Ciudad.IdEstado == filtro.Id;
                     break;
                 case FiltroGeografico.IdPais:
-                     filtroInfo = a => a.Ciudad.Estado.IdPais == filtro.Id;
+                    filtroInfo = a => a.Ciudad.Estado.IdPais == filtro.Id;
                     break;
             }
             return filtroInfo;
@@ -75,17 +75,16 @@ namespace Core.Maestros
                     Expression<Func<OrigenDestino, bool>> filtroInfo = null;
                     var origenDestinoRepositorio = new OrigenDestinoRepository(Contexto);
 
-                    if(filtro.CriterioOrigenDestino == EsOrigenODestino.EsDestino)
+                    if (filtro.CriterioOrigenDestino == EsOrigenODestino.EsDestino)
                         filtroInfo = o => o.Id == int.Parse(filtro.Id) && o.EsDestino == true;
                     else if (filtro.CriterioOrigenDestino == EsOrigenODestino.EsOrigen)
                         filtroInfo = o => o.Id == int.Parse(filtro.Id) && o.EsDestino == true;
                     else
                         filtroInfo = o => o.Id == int.Parse(filtro.Id);
 
-                    var result = origenDestinoRepositorio.Filtrar(filtroInfo);
-                    //var result = origenDestinoRepositorio.ObtenerPorId(filtro.Id).Result.Aeropuerto;
+                    var result = origenDestinoRepositorio.Filtrar(filtroInfo).Select(a => a.Aeropuerto);
                     aeropuertos = Mapper.Map<List<AeropuertoTo>>(result);
-                }               
+                }
             }
             return aeropuertos;
         }
@@ -148,39 +147,107 @@ namespace Core.Maestros
             return ciudad;
         }
 
-
-
-
-
-
-        public Task<EstadoTo> ObtenerEstadoPorIdAsync(int id)
+        public async Task<EstadoTo> ObtenerEstadoPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            EstadoTo estado = new EstadoTo();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var estadoRepositorio = new EstadoRepository(Contexto);
+                var result = await estadoRepositorio.ObtenerPorId(id.ToString());
+                estado = Mapper.Map<EstadoTo>(result);
+            }
+            return estado;
         }
 
-        public Task<ICollection<EstadoTo>> ObtenerEstadosPorFiltroAsync(FiltroGeograficoTo filtro)
+        public ICollection<EstadoTo> ObtenerEstadosPorFiltro(FiltroGeograficoTo filtro)
         {
-            throw new NotImplementedException();
+            List<EstadoTo> estados = new List<EstadoTo>();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var estadoRepositorio = new EstadoRepository(Contexto);
+                var expressionFilter = ConstruirExpresionConsultaEstadoPorFiltroGeografico(filtro);
+                if (expressionFilter != null)
+                {
+                    var result = estadoRepositorio.Filtrar(expressionFilter);
+                    estados = Mapper.Map<List<EstadoTo>>(result);
+                }
+                else
+                {
+                    Expression<Func<Ciudad, bool>> filtroInfo = null;
+                    var ciudadRepositorio = new CiudadRepository(Contexto);
+
+                    if (filtro.JerarquiaGeografica == FiltroGeografico.IdCiudad)
+                        filtroInfo = c => c.Id == filtro.Id;
+
+                    var result = ciudadRepositorio.Filtrar(filtroInfo).Select(c => c.Estado);
+                    estados = Mapper.Map<List<EstadoTo>>(result);
+                }
+            }
+            return estados;
         }
 
-        public Task<OrigenDestinoTo> ObtenerOrigenDestinoPorIdAsync(int id)
+        public Expression<Func<Estado, bool>> ConstruirExpresionConsultaEstadoPorFiltroGeografico(FiltroGeograficoTo filtro)
         {
-            throw new NotImplementedException();
+            Expression<Func<Estado, bool>> filtroInfo = null;
+            switch (filtro.JerarquiaGeografica)
+            {
+                case FiltroGeografico.IdEstado:
+                    filtroInfo = a => a.Id == filtro.Id;
+                    break;
+                case FiltroGeografico.IdPais:
+                    filtroInfo = a => a.Pais.Id == filtro.Id;
+                    break;
+            }
+            return filtroInfo;
         }
 
-        public Task<ICollection<OrigenDestinoTo>> ObtenerOrigenesDestinosPorFiltroAsync(FiltroGeograficoTo filtro)
+        public async Task<OrigenDestinoTo> ObtenerOrigenDestinoPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            OrigenDestinoTo origenDestino = new OrigenDestinoTo();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var origenDestinoRepositorio = new OrigenDestinoRepository(Contexto);
+                var result = await origenDestinoRepositorio.ObtenerPorId(id.ToString());
+                origenDestino = Mapper.Map<OrigenDestinoTo>(result);
+            }
+            return origenDestino;
         }
 
-        public Task<ICollection<PaisTo>> ObtenerPaisesPorFiltroAsync(FiltroGeograficoTo filtro)
+        public ICollection<OrigenDestinoTo> ObtenerOrigenesDestinosPorFiltro(FiltroGeograficoTo filtro)
         {
-            throw new NotImplementedException();
+            List<OrigenDestinoTo> origenesDestinos = new List<OrigenDestinoTo>();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                List<AeropuertoTo> aeropuertos = new List<AeropuertoTo>();
+                aeropuertos = ObtenerAeropuertosPorFiltro(filtro).ToList();
+                foreach (var a in aeropuertos)
+                {
+                    origenesDestinos.AddRange(a.OrigenDestinos);
+                }
+            }
+            return origenesDestinos;
         }
 
-        public Task<PaisTo> ObtenerPaisPorIdAsync(int id)
+        public ICollection<PaisTo> ObtenerPaisesPorFiltro(FiltroGeograficoTo filtro)
         {
-            throw new NotImplementedException();
+            List<PaisTo> paises = new List<PaisTo>();
+            if (filtro.JerarquiaGeografica != FiltroGeografico.IdPais)
+                paises.Add(ObtenerEstadosPorFiltro(filtro).FirstOrDefault().Pais);
+            else
+                paises.Add(ObtenerPaisPorIdAsync(filtro.Id).Result);
+            return paises;
+        }
+
+        public async Task<PaisTo> ObtenerPaisPorIdAsync(int id)
+        {
+            PaisTo pais = new PaisTo();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var paisRepositorio = new PaisRepository(Contexto);
+                var result = await paisRepositorio.ObtenerPorId(id.ToString());
+                pais = Mapper.Map<PaisTo>(result);
+            }
+            return pais;
         }
     }
 }

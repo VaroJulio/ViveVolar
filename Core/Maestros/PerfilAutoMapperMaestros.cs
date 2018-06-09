@@ -14,6 +14,10 @@ namespace Core.Maestros
         public PerfilAutoMapperMaestros()
         {
             CreateMap<Aeropuerto, AeropuertoTo>().ForAllOtherMembers(options => options.Ignore());
+            CreateMap<Ciudad, CiudadTo>().ForAllOtherMembers(options => options.Ignore());
+            CreateMap<Pais, PaisTo>().ForAllOtherMembers(options => options.Ignore());
+            CreateMap<Estado, EstadoTo>().ForAllOtherMembers(options => options.Ignore());
+            CreateMap<OrigenDestino, OrigenDestinoTo>().ForAllOtherMembers(options => options.Ignore());
         }
     }
 }
