@@ -121,8 +121,5 @@ namespace CoreTest
             List<OrigenDestinoTo> origenesDestinos = repositorio.ObtenerOrigenesDestinosPorFiltro(new FiltroGeograficoTo() { Id = id, JerarquiaGeografica = FiltroGeografico.IdPais }).ToList();
             Assert.IsTrue(origenesDestinos.Count > 0);
         }
-
-
-
     }
 }

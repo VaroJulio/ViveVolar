@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Auxiliares\AuxiliarViveVolar.cs" />
+    <Compile Include="Auxiliares\PredicateBuilder.cs" />
     <Compile Include="Auxiliares\ViveVolarException.cs" />
     <Compile Include="Constantes\Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="To\Reservas\ItinerarioTo.cs" />
     <Compile Include="To\Reservas\PasajeroTo.cs" />
     <Compile Include="To\Reservas\ReservaTo.cs" />
+    <Compile Include="To\Vuelos\FiltrosVuelosTo.cs" />
     <Compile Include="To\Vuelos\VuelosTo.cs" />
   </ItemGroup>
   <ItemGroup>

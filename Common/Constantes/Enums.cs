@@ -35,4 +35,18 @@ namespace Common.Constantes
         EsOrigen,
         EsDestino
     }
+
+    public enum FiltroVueloOrigen
+    {
+        IdOrigen,
+        IdCiudadOrigen,
+        IdPaisOrigen
+    }
+
+    public enum FiltroVueloDestino
+    {
+        IdDestino,
+        IdCiudadDestino,
+        IdPaisDestino
+    }
 }
