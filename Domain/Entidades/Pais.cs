@@ -12,6 +12,7 @@ namespace Domain.Entidades
         public int Id { get; set; }
 
         [Required]
+        [Index("NombrePaisIndex", IsUnique = true)]
         [StringLength(50)]
         public string Nombre { get; set; }
 

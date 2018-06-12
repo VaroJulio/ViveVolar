@@ -88,6 +88,7 @@ namespace Domain
         {
             protected override void Seed(ViveVolarDbContext context)
             {
+                context.Paises.Add(new Domain.Entidades.Pais() { Nombre = "Colombia", Habilitado = "S" });
                 base.Seed(context);
             }
         }
@@ -96,6 +97,10 @@ namespace Domain
         {
             protected override void Seed(ViveVolarDbContext context)
             {
+                Rol admin = new Rol();
+                admin.Nombre = "Administrador";
+                admin.Descripcion = "Administrador de la plataforma";
+                context.Roles.Add(admin);
                 base.Seed(context);
             }
         }

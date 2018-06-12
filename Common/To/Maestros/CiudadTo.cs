@@ -7,6 +7,7 @@ namespace Common.To.Maestros
         public int Id { get; set; }
         public string Nombre { get; set; } 
         public int IdEstado { get; set; }
+        public string Habilitado { get; set; }
         public EstadoTo Estado { get; set; }
         public List<AeropuertoTo> Aeropuertos { get; set; }
     }

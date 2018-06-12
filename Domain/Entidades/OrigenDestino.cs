@@ -19,10 +19,12 @@ namespace Domain.Entidades
         public string Nombre { get; set; }
 
         [Required]
-        public bool EsOrigen { get; set; }
+        [StringLength(1)]
+        public string EsOrigen { get; set; }
 
         [Required]
-        public bool EsDestino { get; set; }
+        [StringLength(1)]
+        public string EsDestino { get; set; }
 
         [Required]
         [StringLength(1)]

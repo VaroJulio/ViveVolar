@@ -8,9 +8,9 @@ namespace Common.To.Maestros
         public int Id { get; set; }
         public int IdAeropuerto { get; set; }
         public string Nombre { get; set; }
-        public bool EsOrigen { get; set; }
-        public bool EsDestino { get; set; }
-        public bool Habilitado { get; set; }
+        public string EsOrigen { get; set; }
+        public string EsDestino { get; set; }
+        public string Habilitado { get; set; }
         public AeropuertoTo Aeropuerto { get; set; }
         public List<VueloTo> Vuelos { get; set; }
     }

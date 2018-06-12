@@ -16,9 +16,10 @@ namespace DomainTest
             {
                 using (ViveVolarDbContext contexto = ViveVolarDbContext.GetDbContext())
                 {
-                    contexto.Paises.Add(new Domain.Entidades.Pais() {Nombre="Colombia", Habilitado= "S"});
+                    var ciudad = contexto.Ciudades.FindAsync(1);
+                    //contexto.Paises.Add(new Domain.Entidades.Pais() {Nombre="COLOMBIA", Habilitado= "S"});
                     //contexto.Usuarios.Add(new Domain.Entidades.Usuario() { Correo = "ajjbdeveloper@gmail.com", Clave = "alvaro", IdRol = 1, NombreCompleto = "Alvaro Jose Julio Beltrán" });
-                    contexto.SaveChanges();
+                    //contexto.SaveChanges();
                     Assert.IsTrue(contexto.Database.Exists());
                 }
             }

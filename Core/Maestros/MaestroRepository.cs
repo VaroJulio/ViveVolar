@@ -34,7 +34,7 @@ namespace Core.Maestros
             {
                 var aeropuertoRepositorio = new AeropuertoRepository(Contexto);
 
-                var result = aeropuertoRepositorio.Filtrar(ConstruirExpresionConsultaAeropuertoPorFiltroGeografico(filtro));
+                var result = aeropuertoRepositorio.Filtrar(ConstruirExpresionConsultaAeropuertoPorFiltroGeografico(filtro)).ToList();
                 aeropuertos = Mapper.Map<List<AeropuertoTo>>(result);
             }
             return aeropuertos;
@@ -67,7 +67,7 @@ namespace Core.Maestros
                 var expressionFilter = ConstruirExpresionConsultaAeropuertoPorFiltroAeropuerto(filtro);
                 if (expressionFilter != null)
                 {
-                    var result = aeropuertoRepositorio.Filtrar(expressionFilter);
+                    var result = aeropuertoRepositorio.Filtrar(expressionFilter).ToList();
                     aeropuertos = Mapper.Map<List<AeropuertoTo>>(result);
                 }
                 else
@@ -76,13 +76,13 @@ namespace Core.Maestros
                     var origenDestinoRepositorio = new OrigenDestinoRepository(Contexto);
 
                     if (filtro.CriterioOrigenDestino == EsOrigenODestino.EsDestino)
-                        filtroInfo = o => o.Id == int.Parse(filtro.Id) && o.EsDestino == true;
+                        filtroInfo = o => o.Id == int.Parse(filtro.Id) && o.EsDestino == "S";
                     else if (filtro.CriterioOrigenDestino == EsOrigenODestino.EsOrigen)
-                        filtroInfo = o => o.Id == int.Parse(filtro.Id) && o.EsDestino == true;
+                        filtroInfo = o => o.Id == int.Parse(filtro.Id) && o.EsDestino == "S";
                     else
                         filtroInfo = o => o.Id == int.Parse(filtro.Id);
 
-                    var result = origenDestinoRepositorio.Filtrar(filtroInfo).Select(a => a.Aeropuerto);
+                    var result = origenDestinoRepositorio.Filtrar(filtroInfo).Select(a => a.Aeropuerto).ToList();
                     aeropuertos = Mapper.Map<List<AeropuertoTo>>(result);
                 }
             }
@@ -97,7 +97,7 @@ namespace Core.Maestros
                 case FiltroAeropuerto.IdAeropuerto:
                     filtroInfo = a => a.Id == int.Parse(filtro.Id);
                     break;
-                case FiltroAeropuerto.IdMundial:
+                case FiltroAeropuerto.CodMundial:
                     filtroInfo = a => a.CodigoMundial == filtro.Id;
                     break;
             }
@@ -111,7 +111,7 @@ namespace Core.Maestros
             {
                 var ciudadRepositorio = new CiudadRepository(Contexto);
 
-                var result = ciudadRepositorio.Filtrar(ConstruirExpresionConsultaCiudadPorFiltroGeografico(filtro));
+                var result = ciudadRepositorio.Filtrar(ConstruirExpresionConsultaCiudadPorFiltroGeografico(filtro)).ToList();
                 ciudades = Mapper.Map<List<CiudadTo>>(result);
             }
             return ciudades;
@@ -168,7 +168,7 @@ namespace Core.Maestros
                 var expressionFilter = ConstruirExpresionConsultaEstadoPorFiltroGeografico(filtro);
                 if (expressionFilter != null)
                 {
-                    var result = estadoRepositorio.Filtrar(expressionFilter);
+                    var result = estadoRepositorio.Filtrar(expressionFilter).ToList();
                     estados = Mapper.Map<List<EstadoTo>>(result);
                 }
                 else
@@ -179,7 +179,7 @@ namespace Core.Maestros
                     if (filtro.JerarquiaGeografica == FiltroGeografico.IdCiudad)
                         filtroInfo = c => c.Id == filtro.Id;
 
-                    var result = ciudadRepositorio.Filtrar(filtroInfo).Select(c => c.Estado);
+                    var result = ciudadRepositorio.Filtrar(filtroInfo).Select(c => c.Estado).ToList();
                     estados = Mapper.Map<List<EstadoTo>>(result);
                 }
             }

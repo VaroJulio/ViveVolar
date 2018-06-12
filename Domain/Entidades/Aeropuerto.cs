@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entidades
 {
-    [Table("AEROPUESTOS")]
+    [Table("AEROPUERTOS")]
     public class Aeropuerto
     {
         [Key]

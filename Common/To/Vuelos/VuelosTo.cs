@@ -17,6 +17,7 @@ namespace Common.To.Vuelos
         public DateTime HoraLlegada { get; set; }
         public int NumPasajeros { get; set; }
         public decimal ValorInicialTicket { get; set; }
+        public string Habilitado { get; set; }
         public OrigenDestinoTo Origen { get; set; }
         public OrigenDestinoTo Destino { get; set; }
         public List<ItinerarioTo> Itinerarios { get; set; }

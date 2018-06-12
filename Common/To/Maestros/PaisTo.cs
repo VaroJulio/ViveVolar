@@ -6,6 +6,7 @@ namespace Common.To.Maestros
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public string Habilitado { get; set; }
         public List<EstadoTo> Estados { get; set; }
     }
 }
