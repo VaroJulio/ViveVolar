@@ -24,7 +24,7 @@ namespace Core.Vuelos
                .ForMember(dest => dest.Habilitado, options => options.MapFrom(source => source.Habilitado))
                .ForMember(dest => dest.Origen, options => options.MapFrom(source => source.Origen))
                .ForMember(dest => dest.Destino, options => options.MapFrom(source => source.Destino))
-               .ForMember(dest => dest.Itinerarios, options => options.MapFrom(source => source.Itinerarios))
+               .ForMember(dest => dest.Itinerarios, options => options.MapFrom(source => source.Itinerarios)).ReverseMap()
                .ForAllOtherMembers(options => options.Ignore());
         }
     }

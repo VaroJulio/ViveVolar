@@ -31,6 +31,11 @@ namespace Core
             DbSet.Add(entidad);
         }
 
+        public void InsertarMultiples(ICollection<T> entidades)
+        {
+            DbSet.AddRange(entidades);
+        }
+
         public void Eliminar(T entidad)
         {
             DbSet.Remove(entidad);

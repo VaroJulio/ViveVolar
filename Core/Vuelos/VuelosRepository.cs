@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.To.Vuelos;
@@ -11,6 +10,7 @@ using Core.Vuelos.BdRepositories;
 using Domain;
 using Domain.Entidades;
 using Common.Auxiliares;
+using System.Transactions;
 
 namespace Core.Vuelos
 {
@@ -18,22 +18,65 @@ namespace Core.Vuelos
     {
         public void ActualizarVuelo(VueloTo vuelo)
         {
-            throw new NotImplementedException();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var vueloRepositorio = new VueloRepository(Contexto);
+                Vuelo objetoVueloBd = vueloRepositorio.ObtenerPorId(vuelo.Id.ToString()).Result;
+                MapearDatosActualesVuelo(objetoVueloBd, vuelo);
+                vueloRepositorio.GuardarCambios();
+            }
+        }
+
+        public void MapearDatosActualesVuelo(Vuelo objetoVueloBd, VueloTo vuelo)
+        {
+            objetoVueloBd.IdOrigen = vuelo.IdOrigen;
+            objetoVueloBd.HoraSalida = vuelo.HoraSalida;
+            objetoVueloBd.IdDestino = vuelo.IdDestino;
+            objetoVueloBd.HoraLlegada = vuelo.HoraLlegada;
+            objetoVueloBd.IdOrigen = vuelo.IdOrigen;
+            objetoVueloBd.NumPasajeros = vuelo.NumPasajeros;
+            objetoVueloBd.ValorInicialTicket = vuelo.ValorInicialTicket;
+            objetoVueloBd.Habilitado = vuelo.Habilitado;
         }
 
         public void ActualizarVuelos(List<VueloTo> vuelos)
         {
-            throw new NotImplementedException();
+            //using (var scope = new TransactionScope())
+            //{
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var vueloRepositorio = new VueloRepository(Contexto);
+                foreach (var vuelo in vuelos)
+                {
+                    Vuelo objetoVueloBd = vueloRepositorio.ObtenerPorId(vuelo.Id.ToString()).Result;
+                    MapearDatosActualesVuelo(objetoVueloBd, vuelo);
+                    vueloRepositorio.GuardarCambios();
+                }
+            }
+            //    scope.Complete();
+            //}
         }
 
         public void GuardarNuevosVuelos(List<VueloTo> vuelos)
         {
-            throw new NotImplementedException();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var vueloRepositorio = new VueloRepository(Contexto);
+                ICollection<Vuelo> objetoVuelos = Mapper.Map<ICollection<Vuelo>>(vuelos);
+                vueloRepositorio.InsertarMultiples(objetoVuelos);
+                vueloRepositorio.GuardarCambios();
+            }
         }
 
         public void GuardarNuevoVuelo(VueloTo vuelo)
         {
-            throw new NotImplementedException();
+            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            {
+                var vueloRepositorio = new VueloRepository(Contexto);
+                Vuelo objetoVuelo = Mapper.Map<Vuelo>(vuelo);
+                vueloRepositorio.Insertar(objetoVuelo);
+                vueloRepositorio.GuardarCambios();
+            }
         }
 
         public async Task<VueloTo> ObtenerVueloPorIdAsync(int id)
@@ -65,7 +108,7 @@ namespace Core.Vuelos
         {
             Expression<Func<Vuelo, bool>> filtroInfo = null;
             Expression<Func<Vuelo, bool>> predicateAuxiliar = null;
-            
+
             switch (filtro.CriterioBusquedaOrigen)
             {
                 case FiltroVueloOrigen.IdOrigen:
@@ -81,7 +124,7 @@ namespace Core.Vuelos
 
             if (filtro.FechaOrigen != null)
                 predicateAuxiliar = v => v.HoraSalida == filtro.FechaOrigen;
-                
+
             else
                 predicateAuxiliar = v => v.HoraSalida >= DateTime.UtcNow;
 
