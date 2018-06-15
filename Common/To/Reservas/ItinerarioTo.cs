@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.To.Vuelos;
 
 namespace Common.To.Reservas
 {
@@ -14,7 +10,7 @@ namespace Common.To.Reservas
         public string IdentificacionPasajero { get; set; }
         public decimal ValorFinalTicket { get; set; }
         public ReservaTo Reserva { get; set; }
-        public Vuelos.VueloTo Vuelo { get; set; }
+        public VueloTo Vuelo { get; set; }
         public PasajeroTo Pasajero { get; set; }
     }
 }

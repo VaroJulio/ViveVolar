@@ -57,6 +57,7 @@
     <Compile Include="To\Maestros\OrigenDestinoTo.cs" />
     <Compile Include="To\Maestros\PaisTo.cs" />
     <Compile Include="To\Maestros\TodosMaestrosTo.cs" />
+    <Compile Include="To\Reservas\FiltroReservaTo.cs" />
     <Compile Include="To\Reservas\ItinerarioTo.cs" />
     <Compile Include="To\Reservas\PasajeroTo.cs" />
     <Compile Include="To\Reservas\ReservaTo.cs" />

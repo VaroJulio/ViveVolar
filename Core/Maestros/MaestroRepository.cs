@@ -8,14 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Maestros
 {
     public class MaestroRepository : IMaestrosRepository
     {
-        public async Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id)
+        //Se puede hacer inyección de dependencias por constructor - desde la Api se hace por setter y cuando se llame el repositorio  se le pasa por constructor.
+       public async Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id)
         {
             AeropuertoTo aeropuerto = new AeropuertoTo();
             using (var Contexto = ViveVolarDbContext.GetDbContext())

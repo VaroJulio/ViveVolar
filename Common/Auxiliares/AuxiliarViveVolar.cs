@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
+﻿using System.Configuration;
 
 namespace Common.Auxiliares
 {
-    public static partial class AuxiliarViveVolar
+    public static class AuxiliarViveVolar
     {
         public static string ObtenerAtributoDeConfiguracion(string llaveAtributo, bool esObligatorio)
         {

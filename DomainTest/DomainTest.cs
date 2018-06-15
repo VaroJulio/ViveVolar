@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domain;
-using Domain.Migrations;
-using System.Data.Entity.Migrations;
 
 namespace DomainTest
 {

@@ -3,11 +3,8 @@ using Common.Constantes;
 using Core;
 using Core.Maestros;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreTest
 {

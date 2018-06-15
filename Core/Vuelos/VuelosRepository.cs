@@ -10,7 +10,6 @@ using Core.Vuelos.BdRepositories;
 using Domain;
 using Domain.Entidades;
 using Common.Auxiliares;
-using System.Transactions;
 
 namespace Core.Vuelos
 {
@@ -27,7 +26,7 @@ namespace Core.Vuelos
             }
         }
 
-        public void MapearDatosActualesVuelo(Vuelo objetoVueloBd, VueloTo vuelo)
+        private void MapearDatosActualesVuelo(Vuelo objetoVueloBd, VueloTo vuelo)
         {
             objetoVueloBd.IdOrigen = vuelo.IdOrigen;
             objetoVueloBd.HoraSalida = vuelo.HoraSalida;
@@ -104,7 +103,7 @@ namespace Core.Vuelos
             return vuelos;
         }
 
-        public Expression<Func<Vuelo, bool>> ConstruirExpresionConsultaVuelosPorFiltroVuelos(FiltroVuelosTo filtro)
+        private Expression<Func<Vuelo, bool>> ConstruirExpresionConsultaVuelosPorFiltroVuelos(FiltroVuelosTo filtro)
         {
             Expression<Func<Vuelo, bool>> filtroInfo = null;
             Expression<Func<Vuelo, bool>> predicateAuxiliar = null;
@@ -124,7 +123,6 @@ namespace Core.Vuelos
 
             if (filtro.FechaOrigen != null)
                 predicateAuxiliar = v => v.HoraSalida == filtro.FechaOrigen;
-
             else
                 predicateAuxiliar = v => v.HoraSalida >= DateTime.UtcNow;
 
@@ -151,7 +149,6 @@ namespace Core.Vuelos
                 predicateAuxiliar = v => v.HoraLlegada <= DateTime.UtcNow.AddDays(30);
 
             filtroInfo = filtroInfo.And(predicateAuxiliar);
-
             return filtroInfo;
         }
     }
