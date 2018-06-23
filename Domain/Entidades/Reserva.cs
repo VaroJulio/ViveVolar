@@ -16,7 +16,7 @@ namespace Domain.Entidades
         [Index("CodReservaIndex", IsUnique = true)]
         public Guid CodigoConsultaReserva { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime FechaReserva { get; set; }
 
         [Required]

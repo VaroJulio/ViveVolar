@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Transactions;
 using AutoMapper;
 using Common.To.Reservas;
 using Core.Reservas.BdRepositories;
@@ -13,6 +14,18 @@ namespace Core.Reservas
 {
     public class ReservasRepository : IReservasRepository
     {
+
+        private ReservaRepository _reservaRepositorio { get; set; }
+        private PasajeroRepository _pasajeroRepositorio { get; set; }
+        private ItinerarioRepository _itinerarioRepositorio { get; set; }
+
+        public ReservasRepository(ReservaRepository reservaRepo, PasajeroRepository pasajeroRepo, ItinerarioRepository itinerarioRepo)
+        {
+            _reservaRepositorio = reservaRepo;
+            _pasajeroRepositorio = pasajeroRepo;
+            _itinerarioRepositorio = itinerarioRepo;
+        }
+
         public void ActualizarPasajeros(List<PasajeroTo> pasajeros)
         {
             using (var Contexto = ViveVolarDbContext.GetDbContext())
@@ -37,41 +50,79 @@ namespace Core.Reservas
 
         public void ActualizarReserva(ReservaTo reserva)
         {
-            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            using (var Scope = new TransactionScope())
             {
-                var reservaRepositorio = new ReservaRepository(Contexto);
-                Reserva objetoReservaBd = reservaRepositorio.ObtenerPorId(reserva.IdReserva.ToString()).Result;
-                MapearDatosActualesReserva(objetoReservaBd, reserva);
-                reservaRepositorio.GuardarCambios();
+                using (var Contexto = ViveVolarDbContext.GetDbContext())
+                {
+                    var reservaRepositorio = new ReservaRepository(Contexto);
+                    Reserva reservaModificada = Mapper.Map<Reserva>(reserva);
+                    ActualizarDatosPasajerosItinerarios(Contexto, reservaModificada);
+                    Reserva objetoREservaBd = Contexto.Reservas.Find(reserva.IdReserva);
+                    MapearDatosActualesReserva(objetoREservaBd, reserva);
+                    reservaRepositorio.GuardarCambios();
+                }
+                Scope.Complete();
+            }
+        }
+
+        private void ActualizarDatosPasajerosItinerarios(ViveVolarDbContext Contexto, Reserva Reserva)
+        {
+            foreach (var itinerario in Reserva.Itinerarios)
+            {
+                var pasajeroBd = Contexto.Pasajeros.Find(itinerario.IdentificacionPasajero);
+                if (pasajeroBd != null)
+                {
+                    pasajeroBd.Correo = itinerario.Pasajero.Correo;
+                    pasajeroBd.FechaNacimiento = itinerario.Pasajero.FechaNacimiento;
+                    pasajeroBd.NombreCompleto = itinerario.Pasajero.NombreCompleto;
+                    pasajeroBd.Telefono = itinerario.Pasajero.Telefono;
+                }
+                var itinerarioBd = Contexto.Itinerarios.Find(itinerario.Id);
+                if (itinerarioBd != null)
+                {
+                    itinerarioBd.ValorFinalTicket = itinerario.ValorFinalTicket;
+                }
+                else
+                {
+                    Contexto.Itinerarios.Add(itinerario);
+                }
             }
         }
 
         private void MapearDatosActualesReserva(Reserva objetoReservaBd, ReservaTo reserva)
         {
-            objetoReservaBd.CodigoConsultaReserva = reserva.CodigoConsultaReserva;
-            objetoReservaBd.FechaReserva = reserva.FechaReserva;
-            objetoReservaBd.Correo = reserva.Correo;
+            Reserva reservaModificada = Mapper.Map<Reserva>(reserva);
+            objetoReservaBd.FechaReserva = reservaModificada.FechaReserva;
+            objetoReservaBd.Correo = reservaModificada.Correo;
         }
 
         public void GuardarNuevaReserva(ReservaTo reserva)
         {
-            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            using (var Scope = new TransactionScope())
             {
-                var reservaRepositorio = new ReservaRepository(Contexto);
-                Reserva objetoReserva = Mapper.Map<Reserva>(reserva);
-                reservaRepositorio.Insertar(objetoReserva);
-                reservaRepositorio.GuardarCambios();
+                using (var Contexto = ViveVolarDbContext.GetDbContext())
+                {
+                    var reservaRepositorio = new ReservaRepository(Contexto);
+                    Reserva objetoReserva = Mapper.Map<Reserva>(reserva);
+                    reservaRepositorio.Insertar(objetoReserva);
+                    reservaRepositorio.GuardarCambios();
+                }
+                Scope.Complete();
             }
         }
 
         public void GuardarPasajeros(List<PasajeroTo> pasajeros)
         {
-            using (var Contexto = ViveVolarDbContext.GetDbContext())
+            using (var Scope = new TransactionScope())
             {
-                var pasajeroRepositorio = new PasajeroRepository(Contexto);
-                ICollection<Pasajero> objetoPasajeros = Mapper.Map<ICollection<Pasajero>>(pasajeros);
-                pasajeroRepositorio.InsertarMultiples(objetoPasajeros);
-                pasajeroRepositorio.GuardarCambios();
+                using (var Contexto = ViveVolarDbContext.GetDbContext())
+                {
+                    var pasajeroRepositorio = new PasajeroRepository(Contexto);
+                    ICollection<Pasajero> objetoPasajeros = Mapper.Map<ICollection<Pasajero>>(pasajeros);
+                    pasajeroRepositorio.InsertarMultiples(objetoPasajeros);
+                    pasajeroRepositorio.GuardarCambios();
+                }
+                Scope.Complete();
             }
         }
 

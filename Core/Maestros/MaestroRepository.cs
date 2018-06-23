@@ -14,8 +14,25 @@ namespace Core.Maestros
 {
     public class MaestroRepository : IMaestrosRepository
     {
+        private AeropuertoRepository _aeropuertoRepositorio {get; set;}
+        private PaisRepository _paisRepositorio { get; set; }
+        private EstadoRepository _estadoRepositorio { get; set; }
+        private CiudadRepository _ciudadRepositorio { get; set; }
+        private OrigenDestinoRepository _origenDestinoRepositorio { get; set; }
+
+        public MaestroRepository(AeropuertoRepository aeropuertoRepo, PaisRepository paisRepo, 
+                                 EstadoRepository estadoRepo, CiudadRepository ciudadRepo, 
+                                 OrigenDestinoRepository oriDestRepo)
+        {
+            _aeropuertoRepositorio = aeropuertoRepo;
+            _paisRepositorio = paisRepo;
+            _estadoRepositorio = estadoRepo;
+            _ciudadRepositorio = ciudadRepo;
+            _origenDestinoRepositorio = oriDestRepo;
+        }
+
         //Se puede hacer inyección de dependencias por constructor - desde la Api se hace por setter y cuando se llame el repositorio  se le pasa por constructor.
-       public async Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id)
+        public async Task<AeropuertoTo> ObtenerAeropuertoPorIdAsync(int id)
         {
             AeropuertoTo aeropuerto = new AeropuertoTo();
             using (var Contexto = ViveVolarDbContext.GetDbContext())

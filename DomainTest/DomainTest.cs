@@ -4,6 +4,8 @@ using Domain;
 
 namespace DomainTest
 {
+    #region Pruebas de integración
+    // Prueba de integración con la base de datos.
     [TestClass]
     public class DomainTest
     {
@@ -28,4 +30,5 @@ namespace DomainTest
             }
         }
     }
+    #endregion
 }

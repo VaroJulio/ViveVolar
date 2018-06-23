@@ -18,5 +18,10 @@ namespace Core
 
             Mapper.AssertConfigurationIsValid();
         }
+
+        public static void LimpiarMapeosGlobales()
+        {
+            Mapper.Reset();
+        }
     }
 }
