@@ -7,8 +7,8 @@
     <ProjectGuid>{2A48EE5F-3CB2-45D1-8668-879A0DF229A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DomainTest</RootNamespace>
-    <AssemblyName>DomainTest</AssemblyName>
+    <RootNamespace>ComponentsTest</RootNamespace>
+    <AssemblyName>ComponentsTest</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="CoreTest.Maestros.cs" />
     <Compile Include="CoreTest.Reservas.cs" />
+    <Compile Include="CoreTest.Vuelos.cs" />
     <Compile Include="DomainTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -52,8 +52,7 @@ namespace Core
             //Esto se puede cambiar por una consulta en el webconfig o en base de datos en una tabla de parámetros
             if (nombreTipo != "Pasajero")
             {
-                int parameter;
-                covnertirInt = int.TryParse(id, out parameter);
+                covnertirInt = int.TryParse(id, out int parameter);
 
                 if (covnertirInt)
                     return await DbSet.FindAsync(parameter);

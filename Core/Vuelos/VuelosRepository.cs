@@ -15,6 +15,13 @@ namespace Core.Vuelos
 {
     public class VuelosRepository : IVuelosRepository
     {
+        private VueloRepository _vueloRepositorio { get; set; }
+
+        public VuelosRepository(VueloRepository vueloRepo)
+        {
+            _vueloRepositorio = vueloRepo;
+        }
+
         public void ActualizarVuelo(VueloTo vuelo)
         {
             using (var Contexto = ViveVolarDbContext.GetDbContext())

@@ -13,42 +13,16 @@ using Common.To.Reservas;
 using Common.To.Vuelos;
 using System;
 
-namespace DomainTest
+namespace CoreTest
 {
     #region Pruebas de Integración
     //Pruebas de integración con la base de datos
-    [TestClass]
     public partial class CoreTest
     {
-        //Repositorio a inyectar.
-        private ReservasRepository _reservasRepo;
-
-        [TestInitialize]
-        public void Inicializar()
-        {
-            //Se registran los mapeos y se hace inyección de dependencias en el método donde se inicializa el Test
-            AutoMapperConfig.RegistrarMapeosGlobales();
-            using (var Contexto = ViveVolarDbContext.GetDbContext())
-            {
-                IUnityContainer contenedor = new UnityContainer();
-                contenedor.RegisterType<ReservaRepository>(new Unity.Injection.InjectionConstructor(Contexto));
-                contenedor.RegisterType<PasajeroRepository>(new Unity.Injection.InjectionConstructor(Contexto));
-                contenedor.RegisterType<ItinerarioRepository>(new Unity.Injection.InjectionConstructor(Contexto));
-                _reservasRepo = contenedor.Resolve<ReservasRepository>();
-            }
-        }
-
-        //Se limpian los mapeos.
-        [TestCleanup]
-        public void Limpiar()
-        {
-            AutoMapperConfig.LimpiarMapeosGlobales();
-        }
-
         [TestMethod]
         public void ObtenerReservaPorId()
         {
-            ReservaTo reserva = _reservasRepo.ObtenerReservaPorIdAsync(1).Result;
+            ReservaTo reserva = _reservasRepo.ObtenerReservaPorIdAsync(3).Result;
             Assert.IsTrue(reserva.Correo != null);
         }
 

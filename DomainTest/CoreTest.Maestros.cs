@@ -2,11 +2,15 @@
 using Common.Constantes;
 using Core;
 using Core.Maestros;
+using Core.Vuelos;
+using Core.Reservas;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
 using Core.Maestros.BdRepositories;
+using Core.Vuelos.BdRepositories;
+using Core.Reservas.BdRepositories;
 using Domain;
 
 namespace CoreTest
@@ -18,6 +22,8 @@ namespace CoreTest
     {
         //Repositorio a inyectar.
         private MaestroRepository _maestroRepo;
+        private VuelosRepository _vuelosRepo;
+        private ReservasRepository _reservasRepo;
 
         [TestInitialize]
         public void Inicializar()
@@ -27,12 +33,21 @@ namespace CoreTest
             using (var Contexto = ViveVolarDbContext.GetDbContext())
             {
                 IUnityContainer contenedor = new UnityContainer();
+
                 contenedor.RegisterType<PaisRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 contenedor.RegisterType<EstadoRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 contenedor.RegisterType<CiudadRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 contenedor.RegisterType<AeropuertoRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 contenedor.RegisterType<OrigenDestinoRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 _maestroRepo = contenedor.Resolve<MaestroRepository>();
+
+                contenedor.RegisterType<VueloRepository>(new Unity.Injection.InjectionConstructor(Contexto));
+                _vuelosRepo = contenedor.Resolve<VuelosRepository>();
+
+                contenedor.RegisterType<ReservaRepository>(new Unity.Injection.InjectionConstructor(Contexto));
+                contenedor.RegisterType<PasajeroRepository>(new Unity.Injection.InjectionConstructor(Contexto));
+                contenedor.RegisterType<ItinerarioRepository>(new Unity.Injection.InjectionConstructor(Contexto));
+                _reservasRepo = contenedor.Resolve<ReservasRepository>();
             }
         }
 

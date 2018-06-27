@@ -249,7 +249,7 @@ namespace Core.Reservas
             using (var Contexto = ViveVolarDbContext.GetDbContext())
             {
                 var reservaRepositorio = new ReservaRepository(Contexto);
-                var result = reservaRepositorio.Filtrar(ConstruirExpresionConsultaReservasPorCodigoReserva(id));
+                var result = reservaRepositorio.Filtrar(ConstruirExpresionConsultaReservasPorCodigoReserva(id)).AsEnumerable().SingleOrDefault();
                 reserva = Mapper.Map<ReservaTo>(result);
             }
             return reserva;
