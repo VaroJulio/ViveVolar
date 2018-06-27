@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -132,7 +133,7 @@ namespace Core.Reservas
             using (var Contexto = ViveVolarDbContext.GetDbContext())
             {
                 var itinerarioRepositorio = new ItinerarioRepository(Contexto);
-                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorIdPasajero(id));
+                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorIdPasajero(id)).ToList();
                 itinerarios = Mapper.Map<List<ItinerarioTo>>(result);
             }
             return itinerarios;
@@ -140,7 +141,7 @@ namespace Core.Reservas
 
         private Expression<Func<Itinerario, bool>> ConstruirExpresionConsultaItinerarioPorIdPasajero(string idPasajero)
         {
-            Expression<Func<Itinerario, bool>> filtroInfo = i => i.IdentificacionPasajero == idPasajero;
+            Expression<Func<Itinerario, bool>> filtroInfo = i => i.IdentificacionPasajero == idPasajero && i.Vuelo.HoraSalida > DateTime.Now;
             return filtroInfo;
         }
 
@@ -150,7 +151,7 @@ namespace Core.Reservas
             using (var Contexto = ViveVolarDbContext.GetDbContext())
             {
                 var itinerarioRepositorio = new ItinerarioRepository(Contexto);
-                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorCodReserva(id));
+                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorCodReserva(id)).ToList();
                 itinerarios = Mapper.Map<List<ItinerarioTo>>(result);
             }
             return itinerarios;
@@ -162,7 +163,8 @@ namespace Core.Reservas
             using (var Contexto = ViveVolarDbContext.GetDbContext())
             {
                 var itinerarioRepositorio = new ItinerarioRepository(Contexto);
-                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorIdReserva(id));
+                var expressionFilter = ConstruirExpresionConsultaItinerarioPorIdReserva(id);
+                var result = itinerarioRepositorio.Filtrar(expressionFilter).ToList();
                 itinerarios = Mapper.Map<List<ItinerarioTo>>(result);
             }
             return itinerarios;
@@ -176,7 +178,7 @@ namespace Core.Reservas
             {
                 var itinerarioRepositorio = new ItinerarioRepository(Contexto);
                 var pasajeroRepositorio = new PasajeroRepository(Contexto);
-                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorCodReserva(id));
+                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorCodReserva(id)).ToList();
                 itinerarios = Mapper.Map<List<ItinerarioTo>>(result);
                 foreach (var itinerario in itinerarios)
                 {
@@ -200,7 +202,7 @@ namespace Core.Reservas
             {
                 var itinerarioRepositorio = new ItinerarioRepository(Contexto);
                 var pasajeroRepositorio = new PasajeroRepository(Contexto);
-                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorIdReserva(id));
+                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorIdReserva(id)).ToList();
                 itinerarios = Mapper.Map<List<ItinerarioTo>>(result);
                 foreach (var itinerario in itinerarios)
                 {
@@ -212,7 +214,8 @@ namespace Core.Reservas
 
         private Expression<Func<Itinerario, bool>> ConstruirExpresionConsultaItinerarioPorIdReserva(int idReserva)
         {
-            Expression<Func<Itinerario, bool>> filtroInfo = i => i.IdReserva == idReserva;
+            Expression<Func<Itinerario, bool>> filtroInfo = null;
+            filtroInfo = i => i.IdReserva == idReserva;
             return filtroInfo;
         }
 
@@ -224,7 +227,7 @@ namespace Core.Reservas
             {
                 var itinerarioRepositorio = new ItinerarioRepository(Contexto);
                 var pasajeroRepositorio = new PasajeroRepository(Contexto);
-                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorVuelo(id));
+                var result = itinerarioRepositorio.Filtrar(ConstruirExpresionConsultaItinerarioPorVuelo(id)).ToList();
                 itinerarios = Mapper.Map<List<ItinerarioTo>>(result);
                 foreach (var itinerario in itinerarios)
                 {

@@ -45,16 +45,25 @@ namespace Core
 
         public async Task<T> ObtenerPorId(string id)
         {
-            int parameter;
-            if (int.TryParse(id, out parameter))
+            bool covnertirInt = false;
+            Type  tipo = DbSet.GetType();
+            var nombreTipo = tipo.GetMethods()[0].ReturnType.Name;
+
+            //Esto se puede cambiar por una consulta en el webconfig o en base de datos en una tabla de parámetros
+            if (nombreTipo != "Pasajero")
             {
-                return await DbSet.FindAsync(parameter);
+                int parameter;
+                covnertirInt = int.TryParse(id, out parameter);
+
+                if (covnertirInt)
+                    return await DbSet.FindAsync(parameter);
+                else
+                    return await DbSet.FindAsync(id);
             }
             else
             {
                 return await DbSet.FindAsync(id);
             }
-            
         }
 
         public IQueryable<T> ObtenerTodos()
