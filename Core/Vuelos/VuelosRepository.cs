@@ -24,13 +24,15 @@ namespace Core.Vuelos
 
         public void ActualizarVuelo(VueloTo vuelo)
         {
-            using (var Contexto = ViveVolarDbContext.GetDbContext())
-            {
-                var vueloRepositorio = new VueloRepository(Contexto);
-                Vuelo objetoVueloBd = vueloRepositorio.ObtenerPorId(vuelo.Id.ToString()).Result;
+            //using (var Contexto = ViveVolarDbContext.GetDbContext())
+            //{
+                //var vueloRepositorio = new VueloRepository(Contexto);
+                //Vuelo objetoVueloBd = vueloRepositorio.ObtenerPorId(vuelo.Id.ToString()).Result;
+                Vuelo objetoVueloBd = _vueloRepositorio.ObtenerPorId(vuelo.Id.ToString()).Result;
                 MapearDatosActualesVuelo(objetoVueloBd, vuelo);
-                vueloRepositorio.GuardarCambios();
-            }
+                //vueloRepositorio.GuardarCambios();
+                _vueloRepositorio.GuardarCambios();
+            //}
         }
 
         private void MapearDatosActualesVuelo(Vuelo objetoVueloBd, VueloTo vuelo)
@@ -129,9 +131,15 @@ namespace Core.Vuelos
             }
 
             if (filtro.FechaOrigen != null)
-                predicateAuxiliar = v => v.HoraSalida == filtro.FechaOrigen;
+            {
+                DateTime fecha = filtro.FechaOrigen.Value.Date;
+                predicateAuxiliar = v => v.HoraSalida >= fecha;
+            }
             else
-                predicateAuxiliar = v => v.HoraSalida >= DateTime.UtcNow;
+            {
+                DateTime fecha = DateTime.UtcNow.Date;
+                predicateAuxiliar = v => v.HoraSalida >= fecha;
+            }
 
             filtroInfo = filtroInfo.And(predicateAuxiliar);
 
@@ -151,9 +159,15 @@ namespace Core.Vuelos
             filtroInfo = filtroInfo.And(predicateAuxiliar);
 
             if (filtro.FechaDestino != null)
-                predicateAuxiliar = v => v.HoraLlegada == filtro.FechaDestino;
+            {
+                DateTime fecha = filtro.FechaOrigen.Value.Date.AddDays(1).AddMilliseconds(-1);
+                predicateAuxiliar = v => v.HoraLlegada <= fecha;
+            }
             else
-                predicateAuxiliar = v => v.HoraLlegada <= DateTime.UtcNow.AddDays(30);
+            {
+                DateTime fecha = DateTime.UtcNow.AddDays(31).Date.AddMilliseconds(-1);
+                predicateAuxiliar = v => v.HoraLlegada <= fecha;
+            }
 
             filtroInfo = filtroInfo.And(predicateAuxiliar);
             return filtroInfo;

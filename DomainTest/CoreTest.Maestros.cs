@@ -30,8 +30,9 @@ namespace CoreTest
         {
             //Se registran los mapeos y se hace inyección de dependencias en el método donde se inicializa el Test
             AutoMapperConfig.RegistrarMapeosGlobales();
-            using (var Contexto = ViveVolarDbContext.GetDbContext())
-            {
+            //using (var Contexto = ViveVolarDbContext.GetDbContext())
+            //{
+                var Contexto = ViveVolarDbContext.GetDbContext();
                 IUnityContainer contenedor = new UnityContainer();
 
                 contenedor.RegisterType<PaisRepository>(new Unity.Injection.InjectionConstructor(Contexto));
@@ -48,7 +49,7 @@ namespace CoreTest
                 contenedor.RegisterType<PasajeroRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 contenedor.RegisterType<ItinerarioRepository>(new Unity.Injection.InjectionConstructor(Contexto));
                 _reservasRepo = contenedor.Resolve<ReservasRepository>();
-            }
+            //}
         }
 
         //Se limpian los mapeos.
